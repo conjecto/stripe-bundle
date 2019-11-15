@@ -56,7 +56,7 @@ abstract class AbstractPlanModel extends StripeModel
     protected $metadata;
 
     /**
-     * @StripeObjectParam
+     * @StripeObjectParam(name="nickname")
      *
      * @var string
      */
