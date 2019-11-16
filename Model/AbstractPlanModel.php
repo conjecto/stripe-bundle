@@ -56,11 +56,11 @@ abstract class AbstractPlanModel extends StripeModel
     protected $metadata;
 
     /**
-     * @StripeObjectParam(name="nickname")
+     * @StripeObjectParam
      *
      * @var string
      */
-    protected $name;
+    protected $nickname;
 
     /**
      * @StripeObjectParam(name="statement_descriptor")
@@ -219,9 +219,9 @@ abstract class AbstractPlanModel extends StripeModel
     /**
      * @return string
      */
-    public function getName()
+    public function getNickname()
     {
-        return $this->name;
+        return $this->nickname;
     }
 
     /**
@@ -229,9 +229,9 @@ abstract class AbstractPlanModel extends StripeModel
      *
      * @return $this
      */
-    public function setName($name)
+    public function setNickname($nickname)
     {
-        $this->name = $name;
+        $this->nickname = $nickname;
 
         return $this;
     }
