@@ -13,6 +13,7 @@
         <field name="livemode" column="livemode" type="boolean" />
         <field name="metadata" column="metadata" type="array" nullable="true" />
         <field name="nickname" column="nickname" type="string" />
+        <field name="product" column="product" type="string" />
         <field name="statementDescriptor" column="statement_descriptor" type="string" nullable="true" />
         <field name="trialPeriodDays" column="trial_period_days" type="integer" nullable="true" />
         <field name="active" column="active" type="boolean" />

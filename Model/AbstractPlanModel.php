@@ -70,6 +70,13 @@ abstract class AbstractPlanModel extends StripeModel
     protected $nickname;
 
     /**
+     * @StripeObjectParam
+     *
+     * @var string
+     */
+    protected $product;
+
+    /**
      * @StripeObjectParam(name="statement_descriptor")
      *
      * @var string
@@ -263,6 +270,26 @@ abstract class AbstractPlanModel extends StripeModel
     public function setNickname($nickname)
     {
         $this->nickname = $nickname;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * @param string $product
+     *
+     * @return $this
+     */
+    public function setProduct($product)
+    {
+        $this->product = $product;
 
         return $this;
     }
