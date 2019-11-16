@@ -68,7 +68,7 @@ class DoctrineORMModelManager implements ModelManagerInterface
         $modelClass = $this->modelClass($object);
 
         return $this->objectManager->getRepository($modelClass)->findOneBy([
-            'stripeId' => $object->id
+            'id' => $object->id
         ]);
     }
 
@@ -79,7 +79,7 @@ class DoctrineORMModelManager implements ModelManagerInterface
      * @param string $objectType
      * @return StripeModelInterface|null
      */
-    public function retrieveByStripeId($id, $objectType)
+    public function retrieveById($id, $objectType)
     {
         $stripeObject = new StripeObject($id);
         $stripeObject->object = $objectType;
@@ -202,7 +202,12 @@ class DoctrineORMModelManager implements ModelManagerInterface
     protected function createModel(StripeObject $object)
     {
         $className = $this->modelClass($object);
+        $class = new $className();
 
-        return new $className();
+        if($object->id){
+            $class->setId($object->id);
+        }
+
+        return $class;
     }
 }
