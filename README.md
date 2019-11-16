@@ -116,6 +116,7 @@ In bundle there are abstract entity classes with orm mapping for main stripe obj
  - coupon: `Miracode\StripeBundle\Model\AbstractCouponModel`
  - customer: `Miracode\StripeBundle\Model\AbstractCustomerModel`
  - invoice: `Miracode\StripeBundle\Model\AbstractInvoiceModel`
+ - product: `Miracode\StripeBundle\Model\AbstractProductModel`
  - plan: `Miracode\StripeBundle\Model\AbstractPlanModel`
  - refund: `Miracode\StripeBundle\Model\AbstractRefundModel`
  - subscription: `Miracode\StripeBundle\Model\AbstractSubscriptionModel`

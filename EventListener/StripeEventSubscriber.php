@@ -50,6 +50,8 @@ class StripeEventSubscriber implements EventSubscriberInterface
             StripeEvent::INVOICE_PAYMENT_SUCCEEDED => 'onStripeEvent',
             StripeEvent::INVOICE_SENT => 'onStripeEvent',
             StripeEvent::INVOICE_UPDATED => 'onStripeEvent',
+            StripeEvent::PRODUCT_CREATED => 'onStripeEvent',
+            StripeEvent::PRODUCT_UPDATED => 'onStripeEvent',
             StripeEvent::PLAN_CREATED => 'onStripeEvent',
             StripeEvent::PLAN_UPDATED => 'onStripeEvent',
             StripeEvent::SOURCE_CANCELED => 'onStripeEvent',
@@ -61,6 +63,7 @@ class StripeEventSubscriber implements EventSubscriberInterface
             StripeEvent::CUSTOMER_DELETED => 'onStripeDeleteEvent',
             StripeEvent::CUSTOMER_SOURCE_DELETED => 'onStripeDeleteEvent',
             StripeEvent::PLAN_DELETED => 'onStripeDeleteEvent',
+            StripeEvent::PRODUCT_DELETED => 'onStripeDeleteEvent',
         ];
     }
 

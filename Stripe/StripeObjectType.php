@@ -14,6 +14,7 @@ class StripeObjectType
     const DISCOUNT     = 'discount';
     const EVENT        = 'event';
     const INVOICE      = 'invoice';
+    const PRODUCT      = 'product';
     const PLAN         = 'plan';
     const REFUND       = 'refund';
     const SUBSCRIPTION = 'subscription';
