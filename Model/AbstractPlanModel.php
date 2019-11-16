@@ -9,6 +9,13 @@ abstract class AbstractPlanModel extends StripeModel
     /**
      * @StripeObjectParam
      *
+     * @var bool
+     */
+    protected $active;
+
+    /**
+     * @StripeObjectParam
+     *
      * @var int
      */
     protected $amount;
@@ -75,6 +82,30 @@ abstract class AbstractPlanModel extends StripeModel
      * @var int
      */
     protected $trialPeriodDays;
+
+    /**
+     * Get the value of active
+     *
+     * @return  bool
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set the value of active
+     *
+     * @param  bool  $active
+     *
+     * @return  self
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
 
     /**
      * @return int
