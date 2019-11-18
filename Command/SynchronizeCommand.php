@@ -54,6 +54,42 @@ class SynchronizeCommand extends Command
     {
         $this->synchronizeProducts($input, $output);
         $this->synchronizePlans($input, $output);
+        $this->synchronizeCustomers($input, $output);
+        $this->synchronizeSubscriptions($input, $output);
+        $this->synchronizeInvoices($input, $output);
+        $this->synchronizeCharges($input, $output);
+    }
+
+    /**
+     * synchronizeProducts
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return void
+     */
+    protected function synchronizeCustomers(InputInterface $input, OutputInterface $output)
+    {
+        $customers = \Stripe\Customer::all();
+        foreach ($customers->autoPagingIterator() as $customer) {
+            $this->modelManager->save($customer);
+        }
+        $this->modelManager->flush();
+    }
+
+    /**
+     * synchronizeSubscriptions
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return void
+     */
+    protected function synchronizeSubscriptions(InputInterface $input, OutputInterface $output)
+    {
+        $subscriptions = \Stripe\Subscription::all();
+        foreach ($subscriptions->autoPagingIterator() as $subscription) {
+            $this->modelManager->save($subscription);
+        }
+        $this->modelManager->flush();
     }
 
     /**
@@ -84,6 +120,38 @@ class SynchronizeCommand extends Command
         $plans = \Stripe\Plan::all();
         foreach ($plans->autoPagingIterator() as $plan) {
             $this->modelManager->save($plan);
+        }
+        $this->modelManager->flush();
+    }
+
+    /**
+     * synchronizeInvoices
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return void
+     */
+    protected function synchronizeInvoices(InputInterface $input, OutputInterface $output)
+    {
+        $invoices = \Stripe\Invoice::all();
+        foreach ($invoices->autoPagingIterator() as $invoice) {
+            $this->modelManager->save($invoice);
+        }
+        $this->modelManager->flush();
+    }
+
+    /**
+     * synchronizeCharges
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return void
+     */
+    protected function synchronizeCharges(InputInterface $input, OutputInterface $output)
+    {
+        $charges = \Stripe\Charge::all();
+        foreach ($charges->autoPagingIterator() as $charge) {
+            $this->modelManager->save($charge);
         }
         $this->modelManager->flush();
     }
