@@ -8,6 +8,10 @@
         <service id="miracode_stripe.model_transformer.annotation"
                  class="Miracode\StripeBundle\Transformer\AnnotationTransformer">
         </service>
+        <service id="miracode_stripe.command.synchronize" class="Miracode\StripeBundle\Command\SynchronizeCommand">
+          <argument type="service" id="miracode_stripe.model_manager"/>
+          <tag name="console.command" />
+        </service>
     </services>
 
 </container>

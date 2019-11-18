@@ -138,6 +138,16 @@ class DoctrineORMModelManager implements ModelManagerInterface
     }
 
     /**
+     * Flush recent operations
+     *
+     * @return void
+     */
+    public function flush()
+    {
+        $this->objectManager->flush();
+    }
+
+    /**
      * Get stripe object type
      *
      * @param StripeObject $object

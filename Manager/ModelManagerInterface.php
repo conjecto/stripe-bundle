@@ -54,4 +54,11 @@ interface ModelManagerInterface
      * @return \Miracode\StripeBundle\Model\StripeModelInterface|null
      */
     public function remove(StripeObject $object, $flush = false);
+
+    /**
+     * Flush recent operations
+     *
+     * @return void
+     */
+    public function flush();
 }
