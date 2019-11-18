@@ -55,7 +55,6 @@ class SynchronizeCommand extends Command
         $this->synchronizeProducts($input, $output);
         $this->synchronizePlans($input, $output);
         $this->synchronizeCustomers($input, $output);
-        $this->synchronizeCards($input, $output);
         $this->synchronizeSubscriptions($input, $output);
         $this->synchronizeInvoices($input, $output);
         $this->synchronizeCharges($input, $output);
