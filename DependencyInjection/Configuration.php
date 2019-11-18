@@ -45,6 +45,7 @@ class Configuration implements ConfigurationInterface
                     ->arrayNode('model')
                         ->children()
                             ->scalarNode('card')->cannotBeEmpty()->end()
+                            ->scalarNode('source')->cannotBeEmpty()->end()
                             ->scalarNode('charge')->cannotBeEmpty()->end()
                             ->scalarNode('coupon')->cannotBeEmpty()->end()
                             ->scalarNode('customer')->cannotBeEmpty()->end()

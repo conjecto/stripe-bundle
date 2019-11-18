@@ -55,40 +55,10 @@ class SynchronizeCommand extends Command
         $this->synchronizeProducts($input, $output);
         $this->synchronizePlans($input, $output);
         $this->synchronizeCustomers($input, $output);
+        $this->synchronizeCards($input, $output);
         $this->synchronizeSubscriptions($input, $output);
         $this->synchronizeInvoices($input, $output);
         $this->synchronizeCharges($input, $output);
-    }
-
-    /**
-     * synchronizeProducts
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return void
-     */
-    protected function synchronizeCustomers(InputInterface $input, OutputInterface $output)
-    {
-        $customers = \Stripe\Customer::all();
-        foreach ($customers->autoPagingIterator() as $customer) {
-            $this->modelManager->save($customer);
-        }
-        $this->modelManager->flush();
-    }
-
-    /**
-     * synchronizeSubscriptions
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return void
-     */
-    protected function synchronizeSubscriptions(InputInterface $input, OutputInterface $output)
-    {
-        $subscriptions = \Stripe\Subscription::all();
-        foreach ($subscriptions->autoPagingIterator() as $subscription) {
-            $this->modelManager->save($subscription);
-        }
         $this->modelManager->flush();
     }
 
@@ -105,7 +75,6 @@ class SynchronizeCommand extends Command
         foreach ($products->autoPagingIterator() as $product) {
             $this->modelManager->save($product);
         }
-        $this->modelManager->flush();
     }
 
     /**
@@ -121,7 +90,40 @@ class SynchronizeCommand extends Command
         foreach ($plans->autoPagingIterator() as $plan) {
             $this->modelManager->save($plan);
         }
-        $this->modelManager->flush();
+    }
+
+    /**
+     * synchronizeCustomers
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return void
+     */
+    protected function synchronizeCustomers(InputInterface $input, OutputInterface $output)
+    {
+        $customers = \Stripe\Customer::all();
+        foreach ($customers->autoPagingIterator() as $customer) {
+            $this->modelManager->save($customer);
+            $sources = \Stripe\Customer::allSources($customer->id);
+            foreach ($sources->autoPagingIterator() as $source) {
+                $this->modelManager->save($source, ['object' => 'card']);
+            }
+        }
+    }
+
+    /**
+     * synchronizeSubscriptions
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return void
+     */
+    protected function synchronizeSubscriptions(InputInterface $input, OutputInterface $output)
+    {
+        $subscriptions = \Stripe\Subscription::all();
+        foreach ($subscriptions->autoPagingIterator() as $subscription) {
+            $this->modelManager->save($subscription);
+        }
     }
 
     /**
@@ -137,7 +139,6 @@ class SynchronizeCommand extends Command
         foreach ($invoices->autoPagingIterator() as $invoice) {
             $this->modelManager->save($invoice);
         }
-        $this->modelManager->flush();
     }
 
     /**
@@ -153,6 +154,5 @@ class SynchronizeCommand extends Command
         foreach ($charges->autoPagingIterator() as $charge) {
             $this->modelManager->save($charge);
         }
-        $this->modelManager->flush();
     }
 }

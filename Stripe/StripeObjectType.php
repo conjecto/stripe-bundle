@@ -9,6 +9,7 @@ class StripeObjectType
      */
     const CARD         = 'card';
     const CHARGE       = 'charge';
+    const SOURCE       = 'source';
     const COUPON       = 'coupon';
     const CUSTOMER     = 'customer';
     const DISCOUNT     = 'discount';
