@@ -103,10 +103,10 @@ class SynchronizeCommand extends Command
         $customers = \Stripe\Customer::all();
         foreach ($customers->autoPagingIterator() as $customer) {
             $this->modelManager->save($customer);
-            $sources = \Stripe\Customer::allSources($customer->id);
-            foreach ($sources->autoPagingIterator() as $source) {
-                $this->modelManager->save($source, ['object' => 'card']);
-            }
+            // $sources = \Stripe\Customer::allSources($customer->id);
+            // foreach ($sources->autoPagingIterator() as $source) {
+            //     $this->modelManager->save($source, ['object' => 'card']);
+            // }
         }
     }
 
