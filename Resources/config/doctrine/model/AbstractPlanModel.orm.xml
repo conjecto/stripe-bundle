@@ -5,18 +5,20 @@
 
     <mapped-superclass name="Miracode\StripeBundle\Model\AbstractPlanModel">
         <id name="id" column="id" type="string" length="180" />
-        <field name="amount" column="amount" type="integer" />
+        <field name="active" column="active" type="boolean" />
+        <field name="amount" column="amount" type="integer" nullable="true" />
         <field name="created" column="created" type="integer" />
         <field name="currency" column="currency" type="string" />
         <field name="interval" column="interval_name" type="string" />
         <field name="intervalCount" column="interval_count" type="integer" nullable="true" />
         <field name="livemode" column="livemode" type="boolean" />
         <field name="metadata" column="metadata" type="array" nullable="true" />
+        <field name="tiers" column="tiers" type="array" nullable="true" />
         <field name="nickname" column="nickname" type="string" />
         <field name="product" column="product" type="string" />
+        <field name="billingScheme" column="billing_scheme" type="string" />
         <field name="statementDescriptor" column="statement_descriptor" type="string" nullable="true" />
         <field name="trialPeriodDays" column="trial_period_days" type="integer" nullable="true" />
-        <field name="active" column="active" type="boolean" />
     </mapped-superclass>
 
 </doctrine-mapping>

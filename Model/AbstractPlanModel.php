@@ -65,6 +65,13 @@ abstract class AbstractPlanModel extends StripeModel
     /**
      * @StripeObjectParam
      *
+     * @var array
+     */
+    protected $tiers;
+
+    /**
+     * @StripeObjectParam
+     *
      * @var string
      */
     protected $nickname;
@@ -75,6 +82,13 @@ abstract class AbstractPlanModel extends StripeModel
      * @var string
      */
     protected $product;
+
+    /**
+     * @StripeObjectParam(name="billing_scheme")
+     *
+     * @var string
+     */
+    protected $billingScheme;
 
     /**
      * @StripeObjectParam(name="statement_descriptor")
@@ -237,6 +251,26 @@ abstract class AbstractPlanModel extends StripeModel
     /**
      * @return array
      */
+    public function getTiers()
+    {
+        return $this->metadata;
+    }
+
+    /**
+     * @param array $tiers
+     *
+     * @return $this
+     */
+    public function setTiers($tiers)
+    {
+        $this->tiers = $tiers;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
     public function getMetadata()
     {
         return $this->metadata;
@@ -290,6 +324,26 @@ abstract class AbstractPlanModel extends StripeModel
     public function setProduct($product)
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBillingScheme()
+    {
+        return $this->billingScheme;
+    }
+
+    /**
+     * @param string $billingScheme
+     *
+     * @return $this
+     */
+    public function setBillingScheme($billingScheme)
+    {
+        $this->billingScheme = $billingScheme;
 
         return $this;
     }
