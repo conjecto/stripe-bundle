@@ -128,9 +128,9 @@ abstract class AbstractProductModel extends StripeModel
     /**
      * Get the value of active
      *
-     * @return  bool
+     * @return bool
      */
-    public function getActive()
+    public function isActive()
     {
         return $this->active;
     }
@@ -322,8 +322,11 @@ abstract class AbstractProductModel extends StripeModel
      *
      * @return  array
      */
-    public function getMetadata()
+    public function getMetadata($key = null)
     {
+        if ($key) {
+            return isset($this->metadata[$key]) ? $this->metadata[$key] : null;
+        }
         return $this->metadata;
     }
 

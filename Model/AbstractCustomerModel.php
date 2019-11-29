@@ -266,8 +266,11 @@ abstract class AbstractCustomerModel extends StripeModel
     /**
      * @return array
      */
-    public function getMetadata()
+    public function getMetadata($key = null)
     {
+        if ($key) {
+            return isset($this->metadata[$key]) ? $this->metadata[$key] : null;
+        }
         return $this->metadata;
     }
 

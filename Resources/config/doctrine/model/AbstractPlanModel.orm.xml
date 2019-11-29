@@ -14,6 +14,7 @@
         <field name="livemode" column="livemode" type="boolean" />
         <field name="metadata" column="metadata" type="array" nullable="true" />
         <field name="tiers" column="tiers" type="array" nullable="true" />
+        <field name="tiersMode" column="tiersMode" type="string" nullable="true" />
         <field name="nickname" column="nickname" type="string" />
         <field name="product" column="product" type="string" />
         <field name="billingScheme" column="billing_scheme" type="string" />
