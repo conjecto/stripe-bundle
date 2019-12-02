@@ -57,13 +57,14 @@ class StripeEventSubscriber implements EventSubscriberInterface
             StripeEvent::SOURCE_CANCELED => 'onStripeEvent',
             StripeEvent::SOURCE_CHARGEABLE => 'onStripeEvent',
             StripeEvent::SOURCE_FAILED => 'onStripeEvent',
-            StripeEvent::CUSTOMER_SUBSCRIPTION_DELETED => 'onStripeEvent',
 
             StripeEvent::COUPON_DELETED => 'onStripeDeleteEvent',
             StripeEvent::CUSTOMER_DELETED => 'onStripeDeleteEvent',
             StripeEvent::CUSTOMER_SOURCE_DELETED => 'onStripeDeleteEvent',
-            StripeEvent::PLAN_DELETED => 'onStripeDeleteEvent',
+            StripeEvent::CUSTOMER_SUBSCRIPTION_DELETED => 'onStripeDeleteEvent',
+            StripeEvent::INVOICE_DELETED => 'onStripeDeleteEvent',
             StripeEvent::PRODUCT_DELETED => 'onStripeDeleteEvent',
+            StripeEvent::PLAN_DELETED => 'onStripeDeleteEvent',
         ];
     }
 
