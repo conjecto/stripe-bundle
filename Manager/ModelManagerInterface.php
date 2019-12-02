@@ -32,7 +32,7 @@ interface ModelManagerInterface
      * @param string $objectType
      * @return StripeModelInterface|null
      */
-    public function retrieveByStripeId($id, $objectType);
+    public function retrieveById($id, $objectType);
 
     /**
      * Save stripe object in database
@@ -54,4 +54,11 @@ interface ModelManagerInterface
      * @return \Miracode\StripeBundle\Model\StripeModelInterface|null
      */
     public function remove(StripeObject $object, $flush = false);
+
+    /**
+     * Flush recent operations
+     *
+     * @return void
+     */
+    public function flush();
 }

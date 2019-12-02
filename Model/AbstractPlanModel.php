@@ -9,6 +9,13 @@ abstract class AbstractPlanModel extends StripeModel
     /**
      * @StripeObjectParam
      *
+     * @var bool
+     */
+    protected $active;
+
+    /**
+     * @StripeObjectParam
+     *
      * @var int
      */
     protected $amount;
@@ -58,9 +65,37 @@ abstract class AbstractPlanModel extends StripeModel
     /**
      * @StripeObjectParam
      *
+     * @var array
+     */
+    protected $tiers;
+
+    /**
+     * @StripeObjectParam(name="tiers_mode")
+     *
      * @var string
      */
-    protected $name;
+    protected $tiersMode;
+
+    /**
+     * @StripeObjectParam
+     *
+     * @var string
+     */
+    protected $nickname;
+
+    /**
+     * @StripeObjectParam
+     *
+     * @var string
+     */
+    protected $product;
+
+    /**
+     * @StripeObjectParam(name="billing_scheme")
+     *
+     * @var string
+     */
+    protected $billingScheme;
 
     /**
      * @StripeObjectParam(name="statement_descriptor")
@@ -75,6 +110,30 @@ abstract class AbstractPlanModel extends StripeModel
      * @var int
      */
     protected $trialPeriodDays;
+
+    /**
+     * Get the value of active
+     *
+     * @return  bool
+     */
+    public function isActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set the value of active
+     *
+     * @param  bool  $active
+     *
+     * @return  self
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
 
     /**
      * @return int
@@ -199,8 +258,51 @@ abstract class AbstractPlanModel extends StripeModel
     /**
      * @return array
      */
-    public function getMetadata()
+    public function getTiers()
     {
+        return $this->tiers;
+    }
+
+    /**
+     * @param array $tiers
+     *
+     * @return $this
+     */
+    public function setTiers($tiers)
+    {
+        $this->tiers = $tiers;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTiersMode()
+    {
+        return $this->tiersMode;
+    }
+
+    /**
+     * @param string $tiersMode
+     *
+     * @return $this
+     */
+    public function setTiersMode($tiersMode)
+    {
+        $this->tiersMode = $tiersMode;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMetadata($key = null)
+    {
+        if ($key) {
+            return isset($this->metadata[$key]) ? $this->metadata[$key] : null;
+        }
         return $this->metadata;
     }
 
@@ -219,9 +321,9 @@ abstract class AbstractPlanModel extends StripeModel
     /**
      * @return string
      */
-    public function getName()
+    public function getNickname()
     {
-        return $this->name;
+        return $this->nickname;
     }
 
     /**
@@ -229,9 +331,49 @@ abstract class AbstractPlanModel extends StripeModel
      *
      * @return $this
      */
-    public function setName($name)
+    public function setNickname($nickname)
     {
-        $this->name = $name;
+        $this->nickname = $nickname;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * @param string $product
+     *
+     * @return $this
+     */
+    public function setProduct($product)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBillingScheme()
+    {
+        return $this->billingScheme;
+    }
+
+    /**
+     * @param string $billingScheme
+     *
+     * @return $this
+     */
+    public function setBillingScheme($billingScheme)
+    {
+        $this->billingScheme = $billingScheme;
 
         return $this;
     }
@@ -274,5 +416,54 @@ abstract class AbstractPlanModel extends StripeModel
         $this->trialPeriodDays = $trialPeriodDays;
 
         return $this;
+    }
+
+    /**
+     * @return int
+     * @see https://stripe.com/docs/billing/subscriptions/tiers
+     */
+    public function getQuotation($units = 1)
+    {
+        if ($this->getBillingScheme() == "tiered") {
+            switch($this->getTiersMode()) {
+                case "graduated":
+                    return $this->getGraduatedQuotation($units);
+                default:
+                    throw new \Exception("Tiers mode not implemented : " . $this->getTiersMode());
+            }
+        }
+        return $this->amount * $units;
+    }
+
+    /**
+     * @return int
+     * @see https://stripe.com/docs/billing/subscriptions/tiers#graduated
+     */
+    private function getGraduatedQuotation($units = 1)
+    {
+        $total = 0;
+        $prevTiers = null;
+        for ($i=1; $i<=$units; $i++) {
+            foreach ($this->getTiers() as $tiers) {
+                if($tiers['up_to'] == null || $i <= $tiers['up_to']) {
+                    $total += $tiers['unit_amount'];
+                    if ($tiers['flat_amount'] !== null && $prevTiers != $tiers) {
+                        $total += $tiers['flat_amount'];
+                        $prevTiers = $tiers;
+                    }
+                    break;
+                }
+            }
+        }
+        return $total;
+    }
+
+    /**
+     * @return int
+     * @see https://stripe.com/docs/billing/subscriptions/tiers#volume
+     */
+    private function getVolumeQuotation($units = 1)
+    {
+        // todo
     }
 }

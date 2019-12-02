@@ -36,30 +36,42 @@ class AnnotationTransformer implements TransformerInterface
                 continue;
             }
             $value = $stripeObject[$name];
-            if ($value instanceof StripeObject) {
-                if ($stripeObjectParam->embeddedId) {
-                    $paths = explode('.', $stripeObjectParam->embeddedId);
-                    foreach ($paths as $path) {
-                        if (!isset($value[$path])) {
-                            break;
-                        }
-                        $value = $value[$path];
+
+            if ($value instanceof StripeObject && $stripeObjectParam->embeddedId) {
+                $paths = explode('.', $stripeObjectParam->embeddedId);
+                foreach ($paths as $path) {
+                    if (!isset($value[$path])) {
+                        break;
                     }
-                } else {
-                    if (isset($value->object) &&
-                        $value->object == StripeObjectType::COLLECTION
-                    ) {
-                        $value = array_map(function(StripeObject $obj) {
-                            return $obj->__toArray(true);
-                        }, $value->data);
-                    } else {
-                        $value = $value->__toArray(true);
-                    }
+                    $value = $value[$path];
                 }
+            } else {
+                $value = $this->transformValue($value);
             }
 
             $setter = 'set' . ucfirst($prop->getName());
             call_user_func([$model, $setter], $value);
         }
+    }
+
+    /**
+     * @var mixed $value
+     */
+    public function transformValue($value) {
+        if (is_array($value)) {
+            return array_map(array($this, "transformValue"), $value);
+        }
+        if ($value instanceof StripeObject) {
+            if (isset($value->object) &&
+                $value->object == StripeObjectType::COLLECTION
+            ) {
+                $value = array_map(function(StripeObject $obj) {
+                    return $obj->__toArray(true);
+                }, $value->data);
+            } else {
+                $value = $value->__toArray(true);
+            }
+        }
+        return $value;
     }
 }
