@@ -5,8 +5,8 @@
 
     <mapped-superclass name="Miracode\StripeBundle\Model\AbstractSubscriptionModel">
         <id name="id" column="id" type="string" length="180" />
-        <field name="applicationFeePercent" column="application_fee_percent" type="decimal" precision="6" scale="2" nullable="true" />
-        <field name="billing" column="billing" type="string" nullable="true" />
+        <field name="applicationFeePercent" column="application_fee_percent" type="decimal" percision="6" scale="2" nullable="true" />
+        <field name="collectionMethod" column="collection_method" type="string" nullable="true" />
         <field name="cancelAtPeriodEnd" column="cancel_at_period_end" type="boolean" nullable="true" />
         <field name="canceledAt" column="canceled_at" type="integer" nullable="true" />
         <field name="coupon" column="coupon" type="string" nullable="true" />
