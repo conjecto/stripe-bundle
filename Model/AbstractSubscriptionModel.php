@@ -14,11 +14,11 @@ abstract class AbstractSubscriptionModel extends StripeModel
     protected $applicationFeePercent;
 
     /**
-     * @StripeObjectParam
+     * @StripeObjectParam(name="collection_method")
      *
      * @var string
      */
-    protected $billing;
+    protected $collectionMethod;
 
     /**
      * @StripeObjectParam(name="cancel_at_period_end")
@@ -176,19 +176,19 @@ abstract class AbstractSubscriptionModel extends StripeModel
     /**
      * @return string
      */
-    public function getBilling()
+    public function getCollectionMethod()
     {
-        return $this->billing;
+        return $this->collectionMethod;
     }
 
     /**
-     * @param string $billing
+     * @param string $collectionMethod
      *
      * @return $this
      */
-    public function setBilling($billing)
+    public function setCollectionMethod($collectionMethod)
     {
-        $this->billing = $billing;
+        $this->collectionMethod = $collectionMethod;
 
         return $this;
     }
